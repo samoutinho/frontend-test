@@ -108,10 +108,15 @@ npm run test:snapshot
 ✅ **Listagem de Produtos**
 - Exibe nome, categoria, preço, descrição e imagem
 - Layout responsivo com grid adaptável
+- Suporte a imagens externas (URLs de imagens da internet)
+- Imagens renderizadas em tamanho adequado sem quebrar o layout
 
 ✅ **Formulário de Cadastro**
-- Campos: Nome, Preço, Descrição e URL da Imagem
-- Validação de formulário
+- Campos: Nome, Categoria, Preço, Descrição e URL da Imagem
+- Máscara de formatação de preço (R$ 1.234,56) durante a digitação
+- Remoção automática da máscara ao submeter (mantém formato numérico)
+- Validação de formulário com feedback visual
+- Campos com cores adequadas para melhor visibilidade
 - Produto cadastrado é exibido imediatamente na lista
 
 ✅ **Filtros**
@@ -126,7 +131,9 @@ npm run test:snapshot
 
 ✅ **Paginação**
 - Paginação automática da lista de produtos
-- 10 itens por página (configurável)
+- 5 itens por página (configurável)
+- Integração com backend para paginação server-side
+- Navegação entre páginas com botões Anterior/Próxima
 
 ✅ **Layout Responsivo**
 - Design totalmente responsivo
@@ -146,6 +153,12 @@ npm run test:snapshot
 - README completo com instruções
 - Documentação das escolhas técnicas
 - Instruções para rodar testes
+
+✅ **Melhorias de UX**
+- Máscara de formatação de preço em tempo real (R$ 1.234,56)
+- Campos do formulário com cores adequadas (bg-white, text-gray-900)
+- Suporte a imagens externas configurado no Next.js
+- Imagens renderizadas com tamanho fixo (h-48) para manter layout consistente
 
 ## 🏗️ Estrutura do Projeto
 
