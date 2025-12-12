@@ -1,20 +1,33 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useProductStore } from '@/store/productStore'
 import ProductCard from './ProductCard'
 import Pagination from './Pagination'
 
 export default function ProductList() {
-  const { filteredProducts, currentPage, itemsPerPage, setPage } =
+  const { filteredProducts, currentPage, itemsPerPage, setPage, products } =
     useProductStore()
+  const hasLoadedRef = useRef(false)
 
   useEffect(() => {
+    // Evitar requisições duplicadas (React Strict Mode)
+    if (hasLoadedRef.current) return
+    
+    // Se já existem produtos carregados, não fazer nova requisição
+    const currentProducts = useProductStore.getState().products
+    if (currentProducts.length > 0) {
+      hasLoadedRef.current = true
+      return
+    }
+
+    hasLoadedRef.current = true
+
     const loadProducts = async () => {
       try {
         const { productApi } = await import('@/lib/api')
-        const products = await productApi.getAll()
-        useProductStore.setState({ products })
+        const loadedProducts = await productApi.getAll()
+        useProductStore.setState({ products: loadedProducts })
         useProductStore.getState().applyFilters()
       } catch (error) {
         console.error('Erro ao carregar produtos:', error)
@@ -43,6 +56,7 @@ export default function ProductList() {
     }
 
     loadProducts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const startIndex = (currentPage - 1) * itemsPerPage

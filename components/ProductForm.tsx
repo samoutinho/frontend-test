@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useProductStore } from '@/store/productStore'
 
 export default function ProductForm() {
-  const addProduct = useProductStore((state) => state.addProduct)
   const [formData, setFormData] = useState({
     nome: '',
     categoria: '',
@@ -54,10 +53,14 @@ export default function ProductForm() {
         quantidade_estoque: 0,
       })
 
-      addProduct({
-        ...newProduct,
-        imagem: formData.imagem || undefined,
-      })
+      // Adicionar produto retornado pela API ao store (já tem ID do backend)
+      useProductStore.setState((state) => ({
+        products: [...state.products, {
+          ...newProduct,
+          imagem: formData.imagem || undefined,
+        }],
+      }))
+      useProductStore.getState().applyFilters()
 
       // Reset form
       setFormData({
