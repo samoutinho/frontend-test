@@ -39,8 +39,11 @@ Aplicação web para gerenciamento de produtos desenvolvida com Next.js, TypeScr
 
 4. **Acesse a aplicação**:
    - Abra [http://localhost:3000](http://localhost:3000) no navegador
-   - Você será redirecionado para a tela de login
+   - Você será redirecionado para a tela de login em `/login`
    - Use as credenciais do backend ou crie uma nova conta
+   - **Credenciais de teste** (após rodar seeders no backend):
+     - Email: `admin@thera.com` / Senha: `admin123`
+     - Email: `test@thera.com` / Senha: `test123`
 
 ### Usando Docker (Opcional)
 
