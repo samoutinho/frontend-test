@@ -28,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-sm text-gray-500 mb-2">{product.categoria}</p>
         <p className="text-gray-700 mb-3 line-clamp-2">{product.descricao}</p>
         <p className="text-2xl font-bold text-blue-600">
-          R$ {product.preco.toFixed(2).replace('.', ',')}
+          R$ {Number(product.preco).toFixed(2).replace('.', ',')}
         </p>
       </div>
     </div>
