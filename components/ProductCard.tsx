@@ -11,13 +11,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       {product.imagem && (
-        <div className="relative w-full h-48">
+        <div className="relative w-full h-48 bg-gray-100">
           <Image
             src={product.imagem}
             alt={product.nome}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            unoptimized={product.imagem.startsWith('http')}
           />
         </div>
       )}

@@ -81,6 +81,7 @@ export default function ProductForm() {
         categoria: formData.categoria,
         preco: priceValue,
         descricao: formData.descricao,
+        imagem: formData.imagem || undefined,
         quantidade_estoque: 0,
       })
 
