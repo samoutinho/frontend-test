@@ -13,6 +13,34 @@ export default function ProductForm() {
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  // Função para formatar preço como R$ 1.234,56
+  const formatPrice = (value: string): string => {
+    // Remove tudo que não é número
+    const numbers = value.replace(/\D/g, '')
+    
+    if (!numbers) return ''
+    
+    // Converte para número e divide por 100 para ter centavos
+    const amount = parseInt(numbers, 10) / 100
+    
+    // Formata com separadores
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount)
+  }
+
+  // Função para remover máscara e retornar número
+  const unmaskPrice = (value: string): number => {
+    // Remove tudo que não é número
+    const numbers = value.replace(/\D/g, '')
+    if (!numbers) return 0
+    // Divide por 100 para ter o valor correto (centavos)
+    return parseInt(numbers, 10) / 100
+  }
+
   const validate = () => {
     const newErrors: Record<string, string> = {}
 
@@ -24,7 +52,8 @@ export default function ProductForm() {
       newErrors.categoria = 'Categoria é obrigatória'
     }
 
-    if (!formData.preco || parseFloat(formData.preco) <= 0) {
+    const priceValue = unmaskPrice(formData.preco)
+    if (!formData.preco || priceValue <= 0) {
       newErrors.preco = 'Preço deve ser maior que zero'
     }
 
@@ -45,10 +74,12 @@ export default function ProductForm() {
 
     try {
       const { productApi } = await import('@/lib/api')
+      // Remove máscara do preço antes de enviar
+      const priceValue = unmaskPrice(formData.preco)
       await productApi.create({
         nome: formData.nome,
         categoria: formData.categoria,
-        preco: parseFloat(formData.preco),
+        preco: priceValue,
         descricao: formData.descricao,
         quantidade_estoque: 0,
       })
@@ -75,7 +106,15 @@ export default function ProductForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    
+    // Aplicar máscara apenas no campo de preço
+    if (name === 'preco') {
+      const formatted = formatPrice(value)
+      setFormData((prev) => ({ ...prev, [name]: formatted }))
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+    
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }))
     }
@@ -101,7 +140,7 @@ export default function ProductForm() {
             name="nome"
             value={formData.nome}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 py-2 border rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               errors.nome ? 'border-red-500' : 'border-gray-300'
             }`}
           />
@@ -123,7 +162,7 @@ export default function ProductForm() {
             name="categoria"
             value={formData.categoria}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 py-2 border rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               errors.categoria ? 'border-red-500' : 'border-gray-300'
             }`}
           />
@@ -140,14 +179,13 @@ export default function ProductForm() {
             Preço *
           </label>
           <input
-            type="number"
+            type="text"
             id="preco"
             name="preco"
-            step="0.01"
-            min="0"
             value={formData.preco}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            placeholder="R$ 0,00"
+            className={`w-full px-3 py-2 border rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               errors.preco ? 'border-red-500' : 'border-gray-300'
             }`}
           />
@@ -169,7 +207,7 @@ export default function ProductForm() {
             rows={3}
             value={formData.descricao}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 py-2 border rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               errors.descricao ? 'border-red-500' : 'border-gray-300'
             }`}
           />
@@ -191,7 +229,7 @@ export default function ProductForm() {
             name="imagem"
             value={formData.imagem}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="https://exemplo.com/imagem.jpg"
           />
         </div>
