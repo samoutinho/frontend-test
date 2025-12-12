@@ -10,36 +10,39 @@ export default function ProductList() {
     useProductStore()
 
   useEffect(() => {
-    // Load mock data on mount
-    const mockProducts = [
-      {
-        id: '1',
-        nome: 'Notebook Dell Inspiron 15',
-        categoria: 'Eletrônicos',
-        preco: 2999.99,
-        descricao: 'Notebook Dell Inspiron 15 com processador Intel i5',
-        imagem: 'https://via.placeholder.com/300x200?text=Notebook',
-      },
-      {
-        id: '2',
-        nome: 'Mouse Logitech MX Master',
-        categoria: 'Periféricos',
-        preco: 399.99,
-        descricao: 'Mouse sem fio Logitech MX Master 3',
-        imagem: 'https://via.placeholder.com/300x200?text=Mouse',
-      },
-      {
-        id: '3',
-        nome: 'Teclado Mecânico RGB',
-        categoria: 'Periféricos',
-        preco: 599.99,
-        descricao: 'Teclado mecânico com iluminação RGB',
-        imagem: 'https://via.placeholder.com/300x200?text=Teclado',
-      },
-    ]
+    const loadProducts = async () => {
+      try {
+        const { productApi } = await import('@/lib/api')
+        const products = await productApi.getAll()
+        useProductStore.setState({ products })
+        useProductStore.getState().applyFilters()
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error)
+        // Fallback para mock data se API não estiver disponível
+        const mockProducts = [
+          {
+            id: '1',
+            nome: 'Notebook Dell Inspiron 15',
+            categoria: 'Eletrônicos',
+            preco: 2999.99,
+            descricao: 'Notebook Dell Inspiron 15 com processador Intel i5',
+            imagem: 'https://via.placeholder.com/300x200?text=Notebook',
+          },
+          {
+            id: '2',
+            nome: 'Mouse Logitech MX Master',
+            categoria: 'Periféricos',
+            preco: 399.99,
+            descricao: 'Mouse sem fio Logitech MX Master 3',
+            imagem: 'https://via.placeholder.com/300x200?text=Mouse',
+          },
+        ]
+        useProductStore.setState({ products: mockProducts })
+        useProductStore.getState().applyFilters()
+      }
+    }
 
-    useProductStore.setState({ products: mockProducts })
-    useProductStore.getState().applyFilters()
+    loadProducts()
   }, [])
 
   const startIndex = (currentPage - 1) * itemsPerPage

@@ -37,30 +37,40 @@ export default function ProductForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!validate()) {
       return
     }
 
-    addProduct({
-      nome: formData.nome,
-      categoria: formData.categoria,
-      preco: parseFloat(formData.preco),
-      descricao: formData.descricao,
-      imagem: formData.imagem || undefined,
-    })
+    try {
+      const { productApi } = await import('@/lib/api')
+      const newProduct = await productApi.create({
+        nome: formData.nome,
+        categoria: formData.categoria,
+        preco: parseFloat(formData.preco),
+        descricao: formData.descricao,
+        quantidade_estoque: 0,
+      })
 
-    // Reset form
-    setFormData({
-      nome: '',
-      categoria: '',
-      preco: '',
-      descricao: '',
-      imagem: '',
-    })
-    setErrors({})
+      addProduct({
+        ...newProduct,
+        imagem: formData.imagem || undefined,
+      })
+
+      // Reset form
+      setFormData({
+        nome: '',
+        categoria: '',
+        preco: '',
+        descricao: '',
+        imagem: '',
+      })
+      setErrors({})
+    } catch (error: any) {
+      setErrors({ submit: error.message || 'Erro ao cadastrar produto' })
+    }
   }
 
   const handleChange = (
