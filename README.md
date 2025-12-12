@@ -11,6 +11,7 @@ Aplicação web para gerenciamento de produtos desenvolvida com Next.js, TypeScr
 - **MSW** - Mock Service Worker para API mock
 - **Jest** - Framework de testes
 - **Testing Library** - Biblioteca de testes para React
+- **JWT** - Autenticação com tokens
 
 ## 📋 Pré-requisitos
 
@@ -38,6 +39,8 @@ Aplicação web para gerenciamento de produtos desenvolvida com Next.js, TypeScr
 
 4. **Acesse a aplicação**:
    - Abra [http://localhost:3000](http://localhost:3000) no navegador
+   - Você será redirecionado para a tela de login
+   - Use as credenciais do backend ou crie uma nova conta
 
 ### Usando Docker (Opcional)
 
@@ -90,6 +93,12 @@ npm run test:snapshot
 ## 📚 Funcionalidades Implementadas
 
 ### Funcionalidades Obrigatórias
+
+✅ **Autenticação**
+- Tela de login e cadastro
+- Integração com JWT do backend
+- Proteção de rotas
+- Logout
 
 ✅ **Listagem de Produtos**
 - Exibe nome, categoria, preço, descrição e imagem
