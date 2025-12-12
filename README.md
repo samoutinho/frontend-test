@@ -47,37 +47,6 @@ Aplicação web para gerenciamento de produtos desenvolvida com Next.js, TypeScr
    
    **Nota**: A aplicação está configurada para rodar na porta 3002 para evitar conflitos com outras aplicações. O backend deve estar rodando na porta 3001.
 
-### Usando Docker (Opcional)
-
-1. **Crie um Dockerfile** (se ainda não existir):
-   ```dockerfile
-   FROM node:20-alpine
-   WORKDIR /app
-   COPY package*.json ./
-   RUN npm ci
-   COPY . .
-   RUN npm run build
-   EXPOSE 3000
-   CMD ["npm", "start"]
-   ```
-
-2. **Crie um docker-compose.yml**:
-   ```yaml
-   version: '3.8'
-   services:
-     frontend:
-       build: .
-       ports:
-         - "3000:3000"
-       environment:
-         - NODE_ENV=production
-   ```
-
-3. **Suba o container**:
-   ```bash
-   docker-compose up -d
-   ```
-
 ## 🧪 Executando os Testes
 
 ### Executar todos os testes:
