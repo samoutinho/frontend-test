@@ -43,13 +43,6 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       const itemsPerPage = limit || get().itemsPerPage
       const response: PaginatedResponse<Product> = await productApi.getAll(currentPage, itemsPerPage)
       
-      console.log('Paginação recebida:', {
-        totalPages: response.totalPages,
-        total: response.total,
-        page: response.page,
-        limit: response.limit,
-        dataLength: response.data.length
-      })
       
       set({
         products: response.data,

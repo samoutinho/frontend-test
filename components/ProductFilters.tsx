@@ -99,7 +99,7 @@ export default function ProductFilters() {
             id="sortBy"
             value={filters.sortBy}
             onChange={handleSortChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="nome">Nome</option>
             <option value="preco">Preço</option>
@@ -118,7 +118,7 @@ export default function ProductFilters() {
             id="sortOrder"
             value={filters.sortOrder}
             onChange={handleOrderChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="asc">Crescente</option>
             <option value="desc">Decrescente</option>
