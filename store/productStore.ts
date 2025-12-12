@@ -30,7 +30,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     sortOrder: 'asc',
   },
   currentPage: 1,
-  itemsPerPage: 10,
+  itemsPerPage: 5, // Limite menor para demonstrar paginação
   totalPages: 0,
   total: 0,
   isLoading: false,
@@ -43,6 +43,14 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       const itemsPerPage = limit || get().itemsPerPage
       const response: PaginatedResponse<Product> = await productApi.getAll(currentPage, itemsPerPage)
       
+      console.log('Paginação recebida:', {
+        totalPages: response.totalPages,
+        total: response.total,
+        page: response.page,
+        limit: response.limit,
+        dataLength: response.data.length
+      })
+      
       set({
         products: response.data,
         filteredProducts: response.data,
@@ -53,7 +61,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         isLoading: false,
       })
       
-      // Aplicar filtros locais após carregar
+      // Aplicar filtros locais após carregar (apenas ordenação, pois filtros de busca devem ser no backend)
       get().applyFilters()
     } catch (error) {
       console.error('Erro ao carregar produtos:', error)

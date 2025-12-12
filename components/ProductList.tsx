@@ -19,6 +19,11 @@ export default function ProductList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Debug: log para verificar valores
+  useEffect(() => {
+    console.log('ProductList render:', { totalPages, total, currentPage, filteredProductsLength: filteredProducts.length })
+  }, [totalPages, total, currentPage, filteredProducts.length])
+
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow-md p-8 text-center">
@@ -49,7 +54,7 @@ export default function ProductList() {
         ))}
       </div>
 
-      {totalPages > 1 && (
+      {totalPages > 1 ? (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -58,7 +63,7 @@ export default function ProductList() {
             setPage(page)
           }}
         />
-      )}
+      ) : null}
     </div>
   )
 }
