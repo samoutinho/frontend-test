@@ -26,6 +26,10 @@ describe('ProductList', () => {
       ],
       currentPage: 1,
       itemsPerPage: 10,
+      totalPages: 1,
+      total: 1,
+      isLoading: false,
+      loadProducts: jest.fn().mockResolvedValue(undefined),
       setPage: jest.fn(),
     }
 
@@ -40,6 +44,10 @@ describe('ProductList', () => {
       filteredProducts: [],
       currentPage: 1,
       itemsPerPage: 10,
+      totalPages: 0,
+      total: 0,
+      isLoading: false,
+      loadProducts: jest.fn().mockResolvedValue(undefined),
       setPage: jest.fn(),
     }
 
