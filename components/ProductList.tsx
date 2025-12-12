@@ -54,7 +54,14 @@ export default function ProductList() {
         ))}
       </div>
 
-      {totalPages > 1 ? (
+      {/* Debug: mostrar informações de paginação */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-yellow-100 p-2 text-xs mb-2 rounded">
+          Debug: totalPages={totalPages}, total={total}, currentPage={currentPage}
+        </div>
+      )}
+      
+      {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -63,7 +70,7 @@ export default function ProductList() {
             setPage(page)
           }}
         />
-      ) : null}
+      )}
     </div>
   )
 }
