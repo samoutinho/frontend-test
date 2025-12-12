@@ -219,6 +219,70 @@ frontend-test/
 ✅ Documentação (extra)
 ✅ Teste de snapshot (extra)
 
+## 🚧 Implementações Futuras
+
+### Autenticação e Segurança
+- **Reset de Senha**: Tela de recuperação de senha com envio de email
+- **Autenticação Multi-fator (MFA)**: Suporte a 2FA/TOTP
+- **Gestão de Perfil**: Edição de perfil do usuário
+- **Histórico de Sessões**: Visualização e controle de sessões ativas
+
+### Melhorias de Interface
+- **Upload de Imagens**: Upload direto de imagens ao invés de apenas URLs
+- **Preview de Imagens**: Visualização prévia antes de salvar
+- **Drag and Drop**: Arrastar e soltar para upload de imagens
+- **Tema Escuro/Claro**: Suporte a temas personalizáveis
+- **Internacionalização (i18n)**: Suporte a múltiplos idiomas
+- **PWA**: Transformar em Progressive Web App com suporte offline
+
+### Funcionalidades de Produtos
+- **Edição de Produtos**: Formulário para editar produtos existentes
+- **Exclusão de Produtos**: Funcionalidade de deletar produtos
+- **Categorias como Select**: Integração com API de categorias (quando backend implementar)
+- **Tags e Etiquetas**: Sistema de tags para produtos
+- **Galeria de Imagens**: Suporte a múltiplas imagens por produto
+- **Histórico de Alterações**: Visualização de mudanças nos produtos
+
+### Melhorias de Busca e Filtros
+- **Busca Avançada**: Busca full-text com múltiplos critérios
+- **Filtros Salvos**: Salvar e reutilizar combinações de filtros favoritas
+- **Filtros por Tags**: Filtrar produtos por tags
+- **Sugestões de Busca**: Autocomplete e sugestões inteligentes
+- **Busca por Voz**: Integração com APIs de reconhecimento de voz
+
+### Experiência do Usuário
+- **Notificações em Tempo Real**: Sistema de notificações push
+- **Modo Offline**: Funcionalidade básica sem conexão
+- **Atalhos de Teclado**: Navegação rápida via teclado
+- **Animações e Transições**: Melhorar feedback visual
+- **Loading States**: Melhorar indicadores de carregamento
+- **Error Boundaries**: Tratamento elegante de erros
+
+### Dashboard e Analytics
+- **Dashboard Administrativo**: Painel com métricas e gráficos
+- **Relatórios Visuais**: Gráficos e visualizações de dados
+- **Exportação de Dados**: Exportar listas em CSV/Excel/PDF
+- **Filtros Avançados**: Filtros com operadores lógicos complexos
+
+### Performance e Otimização
+- **Lazy Loading**: Carregamento sob demanda de imagens e componentes
+- **Virtual Scrolling**: Lista virtual para grandes volumes de dados
+- **Service Workers**: Cache inteligente de recursos
+- **Code Splitting**: Divisão de código para melhor performance
+- **Otimização de Imagens**: Compressão e redimensionamento automático
+
+### Testes e Qualidade
+- **Testes E2E Completos**: Cobertura completa com Playwright
+- **Testes de Acessibilidade**: Garantir acessibilidade (WCAG)
+- **Testes Visuais**: Comparação visual automatizada
+- **Testes de Performance**: Medição de performance de renderização
+
+### Integrações
+- **Integração com Analytics**: Google Analytics, Mixpanel, etc.
+- **Integração com Chat**: Suporte a chat ao vivo
+- **Webhooks Frontend**: Sistema de eventos para integrações
+- **Compartilhamento Social**: Compartilhar produtos em redes sociais
+
 ## 📄 Licença
 
 Este projeto é público e está disponível para fins de avaliação técnica.
