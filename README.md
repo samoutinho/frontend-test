@@ -134,9 +134,16 @@ npm run test:snapshot
 ✅ **Teste de Snapshot**
 - Teste de snapshot implementado para ProductList
 
+✅ **Autenticação JWT**
+- Tela de login e cadastro implementada
+- Integração com backend JWT
+- Proteção de rotas
+- Logout funcional
+
 ✅ **Documentação**
 - README completo com instruções
 - Documentação das escolhas técnicas
+- Instruções para rodar testes
 
 ## 🏗️ Estrutura do Projeto
 
