@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Product, FilterState, SortOption, SortOrder } from '@/lib/types'
+import { Product, FilterState, SortOption, SortOrder, PaginatedResponse } from '@/lib/types'
 
 interface ProductStore {
   products: Product[]
@@ -7,6 +7,10 @@ interface ProductStore {
   filters: FilterState
   currentPage: number
   itemsPerPage: number
+  totalPages: number
+  total: number
+  isLoading: boolean
+  loadProducts: (page?: number, limit?: number) => Promise<void>
   addProduct: (product: Omit<Product, 'id'>) => void
   setFilters: (filters: Partial<FilterState>) => void
   applyFilters: () => void
@@ -27,6 +31,35 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   },
   currentPage: 1,
   itemsPerPage: 10,
+  totalPages: 0,
+  total: 0,
+  isLoading: false,
+
+  loadProducts: async (page?: number, limit?: number) => {
+    set({ isLoading: true })
+    try {
+      const { productApi } = await import('@/lib/api')
+      const currentPage = page || get().currentPage
+      const itemsPerPage = limit || get().itemsPerPage
+      const response: PaginatedResponse<Product> = await productApi.getAll(currentPage, itemsPerPage)
+      
+      set({
+        products: response.data,
+        filteredProducts: response.data,
+        totalPages: response.totalPages,
+        total: response.total,
+        currentPage: response.page,
+        itemsPerPage: response.limit,
+        isLoading: false,
+      })
+      
+      // Aplicar filtros locais após carregar
+      get().applyFilters()
+    } catch (error) {
+      console.error('Erro ao carregar produtos:', error)
+      set({ isLoading: false })
+    }
+  },
 
   addProduct: (productData) => {
     const newProduct: Product = {
@@ -44,6 +77,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       filters: { ...state.filters, ...newFilters },
       currentPage: 1,
     }))
+    // Recarregar produtos quando filtros mudarem (backend não suporta filtros ainda)
     get().applyFilters()
   },
 
@@ -96,6 +130,10 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     set({ filteredProducts: filtered })
   },
 
-  setPage: (page) => set({ currentPage: page }),
+  setPage: (page) => {
+    set({ currentPage: page })
+    // Recarregar produtos da página solicitada
+    get().loadProducts(page)
+  },
 }))
 

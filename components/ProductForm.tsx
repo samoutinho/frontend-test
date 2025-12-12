@@ -45,7 +45,7 @@ export default function ProductForm() {
 
     try {
       const { productApi } = await import('@/lib/api')
-      const newProduct = await productApi.create({
+      await productApi.create({
         nome: formData.nome,
         categoria: formData.categoria,
         preco: parseFloat(formData.preco),
@@ -53,14 +53,9 @@ export default function ProductForm() {
         quantidade_estoque: 0,
       })
 
-      // Adicionar produto retornado pela API ao store (já tem ID do backend)
-      useProductStore.setState((state) => ({
-        products: [...state.products, {
-          ...newProduct,
-          imagem: formData.imagem || undefined,
-        }],
-      }))
-      useProductStore.getState().applyFilters()
+      // Recarregar produtos da página atual
+      const { loadProducts, currentPage } = useProductStore.getState()
+      await loadProducts(currentPage)
 
       // Reset form
       setFormData({

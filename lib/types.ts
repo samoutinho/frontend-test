@@ -7,6 +7,14 @@ export interface Product {
   imagem?: string
 }
 
+export interface PaginatedResponse<T> {
+  data: T[]
+  total: number
+  page: number
+  limit: number
+  totalPages: number
+}
+
 export type SortOption = 'nome' | 'preco' | 'categoria'
 export type SortOrder = 'asc' | 'desc'
 

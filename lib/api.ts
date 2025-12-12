@@ -29,7 +29,13 @@ export async function apiRequest(
 }
 
 export const productApi = {
-  getAll: () => apiRequest('/products'),
+  getAll: (page?: number, limit?: number) => {
+    const params = new URLSearchParams()
+    if (page) params.append('page', page.toString())
+    if (limit) params.append('limit', limit.toString())
+    const query = params.toString()
+    return apiRequest(`/products${query ? `?${query}` : ''}`)
+  },
   getById: (id: string) => apiRequest(`/products/${id}`),
   create: (data: any) => apiRequest('/products', { method: 'POST', body: JSON.stringify(data) }),
   update: (id: string, data: any) => apiRequest(`/products/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
